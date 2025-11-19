@@ -10,6 +10,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 export class Header {
   @Output() isRecipesSelectedEvent = new EventEmitter<boolean>();
 
+  isCollapsed: boolean = true;
   isRecipeActive: boolean = true;
 
   onClickSelectFeature(feature: string) {
