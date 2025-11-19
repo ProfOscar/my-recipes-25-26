@@ -11,5 +11,9 @@ import { ShoppingList } from "./shopping-list/shopping-list";
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('my-recipes');
+  isRecipeActive = true;
+
+  onNavigate(isRecipe: boolean) {
+    this.isRecipeActive = isRecipe;
+  }
 }
