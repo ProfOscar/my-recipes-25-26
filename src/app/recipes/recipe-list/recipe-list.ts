@@ -11,7 +11,7 @@ import { RecipeModel } from '../../models/recipe.model';
 export class RecipeList {
   @Output() recipeItemSelected = new EventEmitter<RecipeModel>()
 
-  onRecipeItemSelectd(recipe: RecipeModel) {
+  onRecipeItemClicked(recipe: RecipeModel) {
     this.recipeItemSelected.emit(recipe);
   }
 

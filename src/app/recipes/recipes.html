@@ -3,6 +3,10 @@
         <app-recipe-list (recipeItemSelected)="onRecipeItemSelected($event)"></app-recipe-list>
     </div>
     <div class="col-md-7">
+        @if (selectedRecipe != undefined) {
         <app-recipe-detail [recipe]="selectedRecipe"></app-recipe-detail>
+        } @else {
+        <h3>Seleziona una ricetta per cominciare...</h3>
+        }
     </div>
 </div>
