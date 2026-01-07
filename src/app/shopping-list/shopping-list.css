@@ -1,0 +1,13 @@
+ul {
+    list-style: none;
+}
+
+li {
+    cursor: pointer;
+}
+
+button {
+    float: right;
+    padding: 4px 6px;
+    margin-top: -5px;
+}
