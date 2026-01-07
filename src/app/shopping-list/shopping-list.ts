@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { ShoppingEdit } from "./shopping-edit/shopping-edit";
 import { IngredientModel } from '../models/ingredient.model';
+import { Highlight } from "../shared/highlight";
 
 @Component({
   selector: 'app-shopping-list',
-  imports: [ShoppingEdit],
+  imports: [ShoppingEdit, Highlight],
   templateUrl: './shopping-list.html',
   styleUrl: './shopping-list.css',
 })

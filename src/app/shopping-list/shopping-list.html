@@ -5,7 +5,7 @@
         <h3>Ingredient List</h3>
         <ul class="list-group">
             @for (item of ingredients; track $index) {
-            <li class="list-group-item">
+            <li appHighlight [defaultColor]="'LightYellow'" [highlightColor]="'Yellow'" class="list-group-item">
                 {{item.name}} - {{item.amount}}
                 <button class="btn btn-secondary">
                     Delete
