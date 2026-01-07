@@ -1,1 +1,17 @@
-<p>shopping-edit works!</p>
+<br>
+<div class="row">
+    <div class="col-sm-5 form-group">
+        <label for="ingredientName">Name</label>
+        <input id="ingredientName" type="text" class="form-control" [(ngModel)]="name">
+    </div>
+    <div class="col-sm-2 form-group">
+        <label for="ingredientAmount">Amount</label>
+        <input id="ingredientAmount" type="number" min="1" class="form-control" [(ngModel)]="amount">
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-3 form-group">
+        <button class="btn btn-success" (click)="onAddClick()" [disabled]="name=='' || amount<=0">Add</button>
+        <button class="btn btn-primary" (click)="onClearClick()">Clear</button>
+    </div>
+</div>

@@ -9,8 +9,13 @@ import { IngredientModel } from '../models/ingredient.model';
   styleUrl: './shopping-list.css',
 })
 export class ShoppingList {
+
   ingredients: IngredientModel[] = [
     new IngredientModel('Pomodori', 5),
     new IngredientModel('Panna', 250)
   ]
+
+  onIngredientAdded(ingredient: IngredientModel) {
+    this.ingredients.push(ingredient);
+  }
 }
