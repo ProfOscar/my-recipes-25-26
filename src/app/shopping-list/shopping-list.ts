@@ -16,6 +16,11 @@ export class ShoppingList {
   ]
 
   onIngredientAdded(ingredient: IngredientModel) {
-    this.ingredients.push(ingredient);
+    let ingredientFounded = this.ingredients.find(item => item.name.toLowerCase() == ingredient.name.toLowerCase());
+    if (ingredientFounded == undefined) {
+      this.ingredients.push(ingredient);
+    } else {
+      ingredientFounded.amount += ingredient.amount;
+    }
   }
 }

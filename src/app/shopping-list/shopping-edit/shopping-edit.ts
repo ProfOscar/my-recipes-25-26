@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { IngredientModel } from '../../models/ingredient.model';
 import { FormsModule } from '@angular/forms';
 
@@ -10,9 +10,14 @@ import { FormsModule } from '@angular/forms';
 })
 export class ShoppingEdit {
   @Output() ingredientAdded = new EventEmitter<IngredientModel>();
+  @ViewChild("ingredientName") _txtIngredientName!: ElementRef;
 
   name: string = "";
   amount: number = 0;
+
+  ngAfterViewInit(): void {
+    this._txtIngredientName.nativeElement.focus();
+  }
 
   onAddClick() {
     if (this.name == "") {
@@ -27,8 +32,9 @@ export class ShoppingEdit {
     this.onClearClick();
   }
 
-  onClearClick(){
+  onClearClick() {
     this.name = "";
     this.amount = 0;
+    this._txtIngredientName.nativeElement.focus()
   }
 }
