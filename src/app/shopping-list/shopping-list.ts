@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { ShoppingEdit } from "./shopping-edit/shopping-edit";
 import { IngredientModel } from '../models/ingredient.model';
-import { Highlight } from "../shared/highlight";
+import { HighlightDirective } from "../shared/directives/highlight.directive";
 
 @Component({
   selector: 'app-shopping-list',
-  imports: [ShoppingEdit, Highlight],
+  imports: [ShoppingEdit, HighlightDirective],
   templateUrl: './shopping-list.html',
   styleUrl: './shopping-list.css',
 })

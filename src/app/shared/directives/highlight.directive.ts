@@ -3,7 +3,7 @@ import { Directive, HostBinding, HostListener, Input } from '@angular/core';
 @Directive({
   selector: '[appHighlight]'
 })
-export class Highlight {
+export class HighlightDirective {
   @Input() highlightColor?: string = 'Cyan';
   @Input() defaultColor?: string = 'LightCyan';
   @HostBinding('style.backgroundColor') backgroundColor: string | undefined;

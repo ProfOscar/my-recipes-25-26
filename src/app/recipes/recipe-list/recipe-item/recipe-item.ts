@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { RecipeModel } from '../../../models/recipe.model';
-import { Highlight } from '../../../shared/highlight';
+import { HighlightDirective } from '../../../shared/directives/highlight.directive';
 
 @Component({
   selector: 'app-recipe-item',
-  imports: [Highlight],
+  imports: [HighlightDirective],
   templateUrl: './recipe-item.html',
   styleUrl: './recipe-item.css',
 })
