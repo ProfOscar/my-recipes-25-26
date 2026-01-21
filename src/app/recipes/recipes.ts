@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+
 import { RecipeList } from "./recipe-list/recipe-list";
 import { RecipeDetail } from "./recipe-detail/recipe-detail";
-import { RecipeModel } from '../models/recipe.model';
+import { RecipeService } from './services/recipe.service';
 
 @Component({
   selector: 'app-recipes',
@@ -9,13 +10,6 @@ import { RecipeModel } from '../models/recipe.model';
   templateUrl: './recipes.html',
   styleUrl: './recipes.css',
 })
-export class Recipes {
-
-  selectedRecipe:RecipeModel | undefined;
-
-  onRecipeItemSelected(recipe: RecipeModel) {
-    // console.log(recipe);
-    this.selectedRecipe = recipe;
-  }
-
+export class Recipes { 
+  public recipeService = inject(RecipeService);
 }

@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
-import { RecipeModel } from '../../models/recipe.model';
+import { Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+import { RecipeService } from '../services/recipe.service';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -9,7 +10,6 @@ import { CommonModule } from '@angular/common';
   styleUrl: './recipe-detail.css',
 })
 export class RecipeDetail {
-  @Input() recipe: RecipeModel | undefined
-
+  public recipeService = inject(RecipeService);
   isDropdownOpen: boolean = false;
 }

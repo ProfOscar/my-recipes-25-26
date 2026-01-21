@@ -20,7 +20,7 @@ export class RecipeService {
     this.dataStorage.inviaRichiesta("GET", "/recipes")?.subscribe({
       next: (recipesArray: any) => {
         this.recipes = recipesArray;
-        this.selectedRecipe = this.recipes.length > 0 ? this.recipes[0] : undefined;
+        // this.selectedRecipe = this.recipes.length > 0 ? this.recipes[0] : undefined;
       },
       error: (err: any) => {
         console.log(err);
