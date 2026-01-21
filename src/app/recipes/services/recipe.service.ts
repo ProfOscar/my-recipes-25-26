@@ -6,11 +6,6 @@ import { RecipeModel } from '../../models/recipe.model';
   providedIn: 'root',
 })
 export class RecipeService {
-  // private dataStorage:DataStorage;
-  // constructor(ds:DataStorage) {
-  //   this.dataStorage = ds;  
-  // }
-
   private dataStorage = inject(DataStorageService);
 
   recipes: RecipeModel[] = [];

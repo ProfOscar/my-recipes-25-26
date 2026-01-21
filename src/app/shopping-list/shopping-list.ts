@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ShoppingEdit } from "./shopping-edit/shopping-edit";
 import { IngredientModel } from '../models/ingredient.model';
 import { HighlightDirective } from "../shared/directives/highlight.directive";
+import { ShoppingListService } from './services/shopping-list.service';
 
 @Component({
   selector: 'app-shopping-list',
@@ -10,18 +11,13 @@ import { HighlightDirective } from "../shared/directives/highlight.directive";
   styleUrl: './shopping-list.css',
 })
 export class ShoppingList {
+  public shoppingListService = inject(ShoppingListService);
 
-  ingredients: IngredientModel[] = [
-    new IngredientModel('Pomodori', 5),
-    new IngredientModel('Panna', 250)
-  ]
+  ngOnInit() {
+    this.shoppingListService.getIngredients();
+  }
 
   onIngredientAdded(ingredient: IngredientModel) {
-    let ingredientFounded = this.ingredients.find(item => item.name.toLowerCase() == ingredient.name.toLowerCase());
-    if (ingredientFounded == undefined) {
-      this.ingredients.push(ingredient);
-    } else {
-      ingredientFounded.amount += ingredient.amount;
-    }
+    this.shoppingListService.addIngredient(ingredient);
   }
 }
