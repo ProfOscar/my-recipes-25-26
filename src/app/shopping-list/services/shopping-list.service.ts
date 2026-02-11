@@ -14,6 +14,7 @@ export class ShoppingListService {
     this.dataStorage.inviaRichiesta("GET", "/shopping-list")?.subscribe({
       next: (ingredientsArray: any) => {
         this.ingredients = ingredientsArray;
+        console.log(this.ingredients)
       },
       error: (err: any) => {
         console.log(err);
@@ -25,15 +26,19 @@ export class ShoppingListService {
   addIngredient(ingredient: IngredientModel) {
     let ingredientFounded = this.ingredients.find(item => item.name.toLowerCase() == ingredient.name.toLowerCase());
     if (ingredientFounded == undefined) {
-      this.ingredients.push(ingredient);
       this.dataStorage.inviaRichiesta("POST", "/shopping-list", ingredient)?.subscribe({
-        error: (err: any) => {
-          console.log(err);
-          alert(err.message);
-        }
+        next: () => { this.getIngredients(); },
+        error: (err: any) => { console.log(err); alert(err.message); }
       });
     } else {
-      ingredientFounded.amount += ingredient.amount;
+      let newAmount = ingredientFounded.amount + ingredient.amount;
+      this.dataStorage.inviaRichiesta("PATCH",
+        "/shopping-list/" + ingredientFounded._id,
+        { "amount": newAmount })?.
+        subscribe({
+          next: () => { ingredientFounded.amount = newAmount; },
+          error: (err: any) => { console.log(err); alert(err.message); }
+        });
     }
   }
 }
