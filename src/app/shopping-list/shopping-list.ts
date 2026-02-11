@@ -20,4 +20,8 @@ export class ShoppingList {
   onIngredientAdded(ingredient: IngredientModel) {
     this.shoppingListService.addIngredient(ingredient);
   }
+
+  onDelete(ingredientId: string) {
+    this.shoppingListService.deleteIngredient(ingredientId);
+  }
 }

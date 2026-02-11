@@ -7,7 +7,7 @@
             @for (item of shoppingListService.ingredients; track $index) {
             <li appHighlight [defaultColor]="'LightYellow'" [highlightColor]="'Yellow'" class="list-group-item">
                 {{item.name}} - {{item.amount}}
-                <button class="btn btn-secondary">
+                <button class="btn btn-secondary" (click)="onDelete(item._id!)">
                     Delete
                 </button>
             </li>
