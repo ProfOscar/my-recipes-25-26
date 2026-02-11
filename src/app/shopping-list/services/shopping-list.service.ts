@@ -14,20 +14,32 @@ export class ShoppingListService {
     this.dataStorage.inviaRichiesta("GET", "/shopping-list")?.subscribe({
       next: (ingredientsArray: any) => {
         this.ingredients = ingredientsArray;
-        // console.log(this.ingredients)
+        console.log(this.ingredients)
       },
       error: (err: any) => { console.log(err); alert(err.message); }
     });
+  }
+
+  addIngredients(ingredients?: IngredientModel[]) {
+    if (ingredients != undefined) {
+      for (const ingredient of ingredients) {
+        this.addIngredient(ingredient);
+      }
+    }
   }
 
   addIngredient(ingredient: IngredientModel) {
     let ingredientFounded = this.ingredients.find(item => item.name.toLowerCase() == ingredient.name.toLowerCase());
     if (ingredientFounded == undefined) {
       this.dataStorage.inviaRichiesta("POST", "/shopping-list", ingredient)?.subscribe({
-        next: () => { 
+        next: (data: any) => {
           // questa gestione NON è efficiente, ma necessaria per avere l'id degli ingredienti aggiunti
           // si potrebbe efficientare se il crud server restituisse l'id dell'oggetto aggiunto
-          this.getIngredients();
+          // this.getIngredients();
+          console.log(data);
+          // gestione efficiente: il server restituisce insertedId
+          ingredient._id = data.insertedId;
+          this.ingredients.push(ingredient);
         },
         error: (err: any) => { console.log(err); alert(err.message); }
       });
@@ -39,7 +51,7 @@ export class ShoppingListService {
         subscribe({
           next: () => {
             // questa gestione è efficiente
-            ingredientFounded.amount = newAmount; 
+            ingredientFounded.amount = newAmount;
           },
           error: (err: any) => { console.log(err); alert(err.message); }
         });

@@ -4,7 +4,11 @@ img {
     margin-top: 20px;
 }
 
-.description{
+.description {
     font-size: medium;
     margin: 10px 0;
+}
+
+a {
+    cursor: pointer;
 }

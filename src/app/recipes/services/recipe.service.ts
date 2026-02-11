@@ -16,6 +16,7 @@ export class RecipeService {
       next: (recipesArray: any) => {
         this.recipes = recipesArray;
         // this.selectedRecipe = this.recipes.length > 0 ? this.recipes[0] : undefined;
+        console.log(this.recipes);
       },
       error: (err: any) => {
         console.log(err);
