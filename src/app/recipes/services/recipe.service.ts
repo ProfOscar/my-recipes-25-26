@@ -24,4 +24,14 @@ export class RecipeService {
       }
     })
   }
+
+  deleteRecipe(recipeId: string) {
+    this.dataStorage.inviaRichiesta("DELETE", "/recipes/" + recipeId)?.subscribe({
+      next: () => {
+        let recipeFoundedIndex = this.recipes.findIndex(item => item._id == recipeId);
+        this.recipes.splice(recipeFoundedIndex, 1);
+      },
+      error: (err: any) => { console.log(err); alert(err.message); }
+    });
+  }
 }

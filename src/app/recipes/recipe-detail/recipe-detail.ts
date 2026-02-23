@@ -22,4 +22,8 @@ export class RecipeDetail {
     this.shoppingListService.addIngredients(this.recipeService.selectedRecipe?.ingredients);
     alert("Ingredienti aggiunti alla shopping list");
   }
+
+  onDeleteRecipe(){
+    this.recipeService.deleteRecipe(this.recipeService.selectedRecipe!._id!);
+  }
 }
