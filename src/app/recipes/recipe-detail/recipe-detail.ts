@@ -20,5 +20,6 @@ export class RecipeDetail {
     console.log("dentro");
     console.log(this.recipeService.selectedRecipe?.ingredients);
     this.shoppingListService.addIngredients(this.recipeService.selectedRecipe?.ingredients);
+    alert("Ingredienti aggiunti alla shopping list");
   }
 }

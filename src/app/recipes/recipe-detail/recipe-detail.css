@@ -12,3 +12,9 @@ img {
 a {
     cursor: pointer;
 }
+
+.ingredient {
+    margin: 2px 0 2px 15px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 13pt;
+}
