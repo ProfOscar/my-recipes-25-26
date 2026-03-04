@@ -14,12 +14,17 @@ export class RecipeList {
   public recipeService = inject(RecipeService);
   public shoppingListService = inject(ShoppingListService);
 
+  ngOnInit() {
+    this.recipeService.getRecipes();
+    this.shoppingListService.getIngredients();
+  }
+
   onRecipeItemClicked(recipe: RecipeModel) {
     this.recipeService.selectedRecipe = recipe;
   }
 
-  ngOnInit() {
-    this.recipeService.getRecipes();
-    this.shoppingListService.getIngredients();
+  onNewRecipe() {
+    console.log("onNewRecipe");
+    this.recipeService.isEditing = true;
   }
 }

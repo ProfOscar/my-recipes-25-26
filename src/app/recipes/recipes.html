@@ -3,7 +3,9 @@
         <app-recipe-list></app-recipe-list>
     </div>
     <div class="col-md-7">
-        @if (recipeService.selectedRecipe != undefined) {
+        @if (recipeService.isEditing) {
+        <app-recipe-edit></app-recipe-edit>
+        }@else if (recipeService.selectedRecipe != undefined) {
         <app-recipe-detail></app-recipe-detail>
         } @else {
         <h3>Seleziona una ricetta per cominciare...</h3>

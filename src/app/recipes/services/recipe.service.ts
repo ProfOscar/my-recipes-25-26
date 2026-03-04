@@ -11,6 +11,8 @@ export class RecipeService {
   recipes: RecipeModel[] = [];
   selectedRecipe?: RecipeModel;
 
+  isEditing: boolean = false;
+
   getRecipes() {
     this.dataStorage.inviaRichiesta("GET", "/recipes")?.subscribe({
       next: (recipesArray: any) => {
@@ -23,6 +25,16 @@ export class RecipeService {
         alert(err.message);
       }
     })
+  }
+
+  addRecipe(recipe: RecipeModel) {
+    this.dataStorage.inviaRichiesta("POST", "/recipes", recipe)?.subscribe({
+      next: () => {
+        this.getRecipes();
+        this.isEditing = false;
+      },
+      error: (err: any) => { console.log(err); alert(err.message); }
+    });
   }
 
   deleteRecipe(recipeId: string) {

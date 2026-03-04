@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" [(ngModel)]="name">
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea rows="5" class="form-control" id="description" [(ngModel)]="description"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="imageURL">Image URL:</label>
+            <input type="text" class="form-control" id="imageURL" [(ngModel)]="imageURL">
+            <label for="imageBase64">Select Image:</label>
+            <input type="file" class="form-control" name="imageBase64" id="imageBase64"
+                (change)="onFileSelected($event)">
+        </div>
+
+        <div class="form-group">
+            <label for="ingredients">
+                Ingredients -
+                <span style="font-weight: normal;">name:amount</span>
+            </label>
+            <textarea rows="6" class="form-control" id="ingredients" [(ngModel)]="ingredients"></textarea>
+        </div>
+
+        <div class="form-group" style="margin-top: 20px !important;">
+            <input type="button" class="btn btn-success btn-block" value="Save" (click)="onSave()">
+        </div>
+        <div class="form-group">
+            <input type="button" class="btn btn-warning btn-block" value="Cancel" (click)="onCancel()">
+        </div>
+    </div>
+</div>
