@@ -23,7 +23,7 @@ export class RecipeDetail {
     alert("Ingredienti aggiunti alla shopping list");
   }
 
-  onDeleteRecipe(){
+  onDeleteRecipe() {
     this.recipeService.deleteRecipe(this.recipeService.selectedRecipe!._id!);
   }
 }
