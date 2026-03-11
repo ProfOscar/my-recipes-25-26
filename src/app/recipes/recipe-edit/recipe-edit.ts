@@ -19,6 +19,27 @@ export class RecipeEdit {
   imageBase64: string = "";
   ingredients: string = "";
 
+  editRecipe?: RecipeModel;
+
+  ngOnInit(): void {
+    if (!this.recipeService.isNew) {
+      // siamo in editing di ricetta esistente
+      // popolo i campi
+      this.name = this.recipeService.selectedRecipe?.name!;
+      this.description = this.recipeService.selectedRecipe?.description!;
+      let img: string = this.recipeService.selectedRecipe?.imagePath!;
+      this.imageURL = img.indexOf("data:image") == 0 ? "" : img;
+      // this.imageBase64 = this.recipeService.selectedRecipe?.imagePath!;
+      if (this.recipeService.selectedRecipe?.ingredients) {
+        for (let i = 0; i < this.recipeService.selectedRecipe?.ingredients.length; i++) {
+          const ing = this.recipeService.selectedRecipe?.ingredients[i];
+          this.ingredients += ing.name + ":" + ing.amount + "\n";
+        }
+      }
+      this.editRecipe = this.recipeService.selectedRecipe;
+    }
+  }
+
   onFileSelected(event: any) {
     if (event.target.files && event.target.files[0]) {
       let file = event.target.files[0];
@@ -43,12 +64,24 @@ export class RecipeEdit {
   }
 
   onSave() {
-    // Nuova ricetta
-    let image = this.imageBase64 ? this.imageBase64 :
-      this.imageURL ? this.imageURL : "";
-    let ingredientsArray: IngredientModel[] = this.parseIngredients();
-    let newRecipe: RecipeModel = new RecipeModel(this.name, this.description, image, ingredientsArray);
-    this.recipeService.addRecipe(newRecipe);
+    if (this.recipeService.isNew) {
+      // Nuova ricetta
+      let image = this.imageBase64 ? this.imageBase64 :
+        this.imageURL ? this.imageURL : "";
+      let ingredientsArray: IngredientModel[] = this.parseIngredients();
+      let newRecipe: RecipeModel = new RecipeModel(this.name, this.description, image, ingredientsArray);
+      this.recipeService.addRecipe(newRecipe);
+    } else {
+      // Edit
+      this.editRecipe!.name = this.name;
+      this.editRecipe!.description = this.description;
+      if (this.imageBase64)
+        this.editRecipe!.imagePath = this.imageBase64;
+      else if (this.imageURL)
+        this.editRecipe!.imagePath = this.imageURL;
+      this.editRecipe!.ingredients = this.parseIngredients();
+      this.recipeService.editRecipe(this.editRecipe!);
+    }
   }
 
   onCancel() {

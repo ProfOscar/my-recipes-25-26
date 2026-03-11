@@ -24,7 +24,8 @@ export class RecipeList {
   }
 
   onNewRecipe() {
-    console.log("onNewRecipe");
+    // console.log("onNewRecipe");
     this.recipeService.isEditing = true;
+    this.recipeService.isNew = true;
   }
 }

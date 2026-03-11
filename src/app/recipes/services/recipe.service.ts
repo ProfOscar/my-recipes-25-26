@@ -12,6 +12,7 @@ export class RecipeService {
   selectedRecipe?: RecipeModel;
 
   isEditing: boolean = false;
+  isNew: boolean = true;
 
   getRecipes() {
     this.dataStorage.inviaRichiesta("GET", "/recipes")?.subscribe({
@@ -35,6 +36,18 @@ export class RecipeService {
       },
       error: (err: any) => { console.log(err); alert(err.message); }
     });
+  }
+
+  editRecipe(recipe: RecipeModel) {
+    let id = recipe._id;
+    delete recipe._id;
+    this.dataStorage.inviaRichiesta("PATCH", "/recipes/" + id, recipe)?.subscribe({
+      next: () => {
+        this.getRecipes();
+        this.isEditing = false;
+      },
+      error: (err: any) => { console.log(err); alert(err.message); }
+    })
   }
 
   deleteRecipe(recipeId: string) {

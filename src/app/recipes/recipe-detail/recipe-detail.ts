@@ -17,10 +17,15 @@ export class RecipeDetail {
   isDropdownOpen: boolean = false;
 
   onToShoppingList() {
-    console.log("dentro");
-    console.log(this.recipeService.selectedRecipe?.ingredients);
+    // console.log("dentro");
+    // console.log(this.recipeService.selectedRecipe?.ingredients);
     this.shoppingListService.addIngredients(this.recipeService.selectedRecipe?.ingredients);
     alert("Ingredienti aggiunti alla shopping list");
+  }
+
+  onEditRecipe() {
+    this.recipeService.isEditing = true;
+    this.recipeService.isNew = false;
   }
 
   onDeleteRecipe() {
