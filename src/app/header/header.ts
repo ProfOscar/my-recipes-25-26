@@ -1,20 +1,13 @@
 import { NgClass } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
+import { RouterLink, RouterLinkActive } from "@angular/router";
 
 @Component({
   selector: 'app-header',
-  imports: [NgClass],
+  imports: [NgClass, RouterLink, RouterLinkActive],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
 export class Header {
-  @Output() isRecipesSelectedEvent = new EventEmitter<boolean>();
-
   isCollapsed: boolean = true;
-  isRecipeActive: boolean = true;
-
-  onClickSelectFeature(feature: string) {
-    this.isRecipeActive = feature == "recipe";
-    this.isRecipesSelectedEvent.emit(this.isRecipeActive);
-  }
 }
