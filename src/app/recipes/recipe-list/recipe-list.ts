@@ -3,10 +3,11 @@ import { RecipeItem } from "./recipe-item/recipe-item";
 import { RecipeModel } from '../../models/recipe.model';
 import { RecipeService } from '../services/recipe.service';
 import { ShoppingListService } from '../../shopping-list/services/shopping-list.service';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-recipe-list',
-  imports: [RecipeItem],
+  imports: [RecipeItem, RouterLink],
   templateUrl: './recipe-list.html',
   styleUrl: './recipe-list.css',
 })

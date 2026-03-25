@@ -1,5 +1,6 @@
 import { Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Params } from '@angular/router';
 
 import { RecipeService } from '../services/recipe.service';
 import { ShoppingListService } from '../../shopping-list/services/shopping-list.service';
@@ -11,10 +12,21 @@ import { ShoppingListService } from '../../shopping-list/services/shopping-list.
   styleUrl: './recipe-detail.css',
 })
 export class RecipeDetail {
+  public activatedRoute = inject(ActivatedRoute);
   public recipeService = inject(RecipeService);
   public shoppingListService = inject(ShoppingListService);
 
   isDropdownOpen: boolean = false;
+
+  ngOnInit() {
+    // leggere il parametro della route con l'id
+    this.activatedRoute.params.subscribe(
+      (params: Params) => {
+        console.log("Recipe ID: " + params['id']);
+        this.recipeService.select(params['id']);
+      }
+    )
+  }
 
   onToShoppingList() {
     // console.log("dentro");

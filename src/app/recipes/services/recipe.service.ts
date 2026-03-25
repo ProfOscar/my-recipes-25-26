@@ -14,6 +14,12 @@ export class RecipeService {
   isEditing: boolean = false;
   isNew: boolean = true;
 
+  select(id: string) {
+    this.selectedRecipe = this.recipes.find(
+      recipe => recipe._id == id
+    );
+  }
+
   getRecipes() {
     this.dataStorage.inviaRichiesta("GET", "/recipes")?.subscribe({
       next: (recipesArray: any) => {
