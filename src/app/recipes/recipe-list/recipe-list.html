@@ -1,6 +1,5 @@
 <div class="row">
     <div class="col-xs-12">
-        <!-- <button class="btn btn-success" style="margin-bottom: 12px;" (click)="onNewRecipe()">New Recipe</button> -->
         <a routerLink="new" class="btn btn-success" style="margin-bottom: 12px;">New Recipe</a>
     </div>
 </div>
@@ -8,8 +7,7 @@
 <div class="row">
     <div class="col-xs-12">
         @for (recipe of recipeService.recipes; track $index) {
-        <!-- <app-recipe-item [item]="recipe" (click)="onRecipeItemClicked(recipe)"></app-recipe-item> -->
-        <app-recipe-item [item]="recipe" [routerLink]="recipe._id"></app-recipe-item>
+        <app-recipe-item [item]="recipe" [routerLink]="recipe._id" routerLinkActive="selected"></app-recipe-item>
         }
     </div>
 </div>

@@ -1,23 +1,29 @@
 import { inject, Injectable } from '@angular/core';
 import { DataStorageService } from '../../shared/services/data-storage.service';
 import { RecipeModel } from '../../models/recipe.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RecipeService {
   private dataStorage = inject(DataStorageService);
+  private router = inject(Router);
 
   recipes: RecipeModel[] = [];
   selectedRecipe?: RecipeModel;
 
-  isEditing: boolean = false;
-  isNew: boolean = true;
-
-  select(id: string) {
-    this.selectedRecipe = this.recipes.find(
-      recipe => recipe._id == id
-    );
+  getRecipe(id: string) {
+    this.dataStorage.inviaRichiesta("GET", "/recipes/" + id)?.subscribe({
+      next: (recipe: any) => {
+        this.selectedRecipe = recipe;
+        console.log(this.selectedRecipe);
+      },
+      error: (err: any) => {
+        console.log(err);
+        alert(err.message);
+      }
+    })
   }
 
   getRecipes() {
@@ -36,9 +42,9 @@ export class RecipeService {
 
   addRecipe(recipe: RecipeModel) {
     this.dataStorage.inviaRichiesta("POST", "/recipes", recipe)?.subscribe({
-      next: () => {
+      next: (data: any) => {
         this.getRecipes();
-        this.isEditing = false;
+        this.router.navigate(['recipes', data.insertedId])
       },
       error: (err: any) => { console.log(err); alert(err.message); }
     });
@@ -50,7 +56,7 @@ export class RecipeService {
     this.dataStorage.inviaRichiesta("PATCH", "/recipes/" + id, recipe)?.subscribe({
       next: () => {
         this.getRecipes();
-        this.isEditing = false;
+        this.router.navigate(['recipes', id])
       },
       error: (err: any) => { console.log(err); alert(err.message); }
     })
@@ -66,6 +72,7 @@ export class RecipeService {
         this.getRecipes();
         this.selectedRecipe = undefined;
         alert("Ricetta cancellata!");
+        this.router.navigateByUrl("/recipes");
       },
       error: (err: any) => { console.log(err); alert(err.message); }
     });

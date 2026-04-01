@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { RecipeService } from '../services/recipe.service';
 import { RecipeModel } from '../../models/recipe.model';
 import { IngredientModel } from '../../models/ingredient.model';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -11,6 +12,8 @@ import { IngredientModel } from '../../models/ingredient.model';
   styleUrl: './recipe-edit.css',
 })
 export class RecipeEdit {
+  public router = inject(Router);
+  public activatedRoute = inject(ActivatedRoute);
   public recipeService = inject(RecipeService);
 
   name: string = "";
@@ -19,25 +22,30 @@ export class RecipeEdit {
   imageBase64: string = "";
   ingredients: string = "";
 
+  id?: string;
   editRecipe?: RecipeModel;
 
   ngOnInit(): void {
-    if (!this.recipeService.isNew) {
-      // siamo in editing di ricetta esistente
-      // popolo i campi
-      this.name = this.recipeService.selectedRecipe?.name!;
-      this.description = this.recipeService.selectedRecipe?.description!;
-      let img: string = this.recipeService.selectedRecipe?.imagePath!;
-      this.imageURL = img.indexOf("data:image") == 0 ? "" : img;
-      // this.imageBase64 = this.recipeService.selectedRecipe?.imagePath!;
-      if (this.recipeService.selectedRecipe?.ingredients) {
-        for (let i = 0; i < this.recipeService.selectedRecipe?.ingredients.length; i++) {
-          const ing = this.recipeService.selectedRecipe?.ingredients[i];
-          this.ingredients += ing.name + ":" + ing.amount + "\n";
+    this.activatedRoute.params.subscribe((params: Params) => {
+      if (params['id']) {
+        // non è nuova, è edit
+        // siamo in editing di ricetta esistente
+        // popolo i campi
+        this.id = params['id'];
+        this.name = this.recipeService.selectedRecipe?.name!;
+        this.description = this.recipeService.selectedRecipe?.description!;
+        let img: string = this.recipeService.selectedRecipe?.imagePath!;
+        this.imageURL = img && img.indexOf("data:image") == 0 ? "" : img;
+        // this.imageBase64 = this.recipeService.selectedRecipe?.imagePath!;
+        if (this.recipeService.selectedRecipe?.ingredients) {
+          for (let i = 0; i < this.recipeService.selectedRecipe?.ingredients.length; i++) {
+            const ing = this.recipeService.selectedRecipe?.ingredients[i];
+            this.ingredients += ing.name + ":" + ing.amount + "\n";
+          }
         }
+        this.editRecipe = this.recipeService.selectedRecipe;
       }
-      this.editRecipe = this.recipeService.selectedRecipe;
-    }
+    });
   }
 
   onFileSelected(event: any) {
@@ -64,14 +72,7 @@ export class RecipeEdit {
   }
 
   onSave() {
-    if (this.recipeService.isNew) {
-      // Nuova ricetta
-      let image = this.imageBase64 ? this.imageBase64 :
-        this.imageURL ? this.imageURL : "";
-      let ingredientsArray: IngredientModel[] = this.parseIngredients();
-      let newRecipe: RecipeModel = new RecipeModel(this.name, this.description, image, ingredientsArray);
-      this.recipeService.addRecipe(newRecipe);
-    } else {
+    if (this.editRecipe) {
       // Edit
       this.editRecipe!.name = this.name;
       this.editRecipe!.description = this.description;
@@ -81,10 +82,17 @@ export class RecipeEdit {
         this.editRecipe!.imagePath = this.imageURL;
       this.editRecipe!.ingredients = this.parseIngredients();
       this.recipeService.editRecipe(this.editRecipe!);
+    } else {
+      // Nuova ricetta
+      let image = this.imageBase64 ? this.imageBase64 :
+        this.imageURL ? this.imageURL : "";
+      let ingredientsArray: IngredientModel[] = this.parseIngredients();
+      let newRecipe: RecipeModel = new RecipeModel(this.name, this.description, image, ingredientsArray);
+      this.recipeService.addRecipe(newRecipe);
     }
   }
 
   onCancel() {
-    this.recipeService.isEditing = false;
+    this.router.navigateByUrl(this.id ? "/recipes/" + this.id : "/recipes");
   }
 }
